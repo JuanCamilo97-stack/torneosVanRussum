@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  postgres_sql:
+    image: postgres:13
+    container_name: postgres_sql
+    restart: always
+    environment:
+      - POSTGRES_DB=db_games
+      - POSTGRES_USER=juandevlop
+      - POSTGRES_PASSWORD=secret1234
+    ports:
+      - '5432:5432' 
+    volumes:
+      - postgres_data:/var/lib/postgres_sql
+
+  volumes: 
+  postgresql-volume:
+  external: true
+    
