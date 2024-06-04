@@ -6,10 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ResultsModule } from './results/results.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({
-    isGlobal: true,
-    envFilePath: '.env'
-  }),
+  imports: [ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.POSTGRES_HOST,
@@ -25,5 +22,7 @@ import { ResultsModule } from './results/results.module';
     GamesModule, 
     PlayersModule, ResultsModule
   ],
+  controllers: [GamesModule,PlayersModule,ResultsModule],
+  providers: [],
 })
 export class AppModule {}

@@ -26,6 +26,8 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+github author https://github.com/JuanCamilo97-stack/torneosVanRussum.git
+
 ## Installation
 
 ```bash
