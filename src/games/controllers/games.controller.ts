@@ -1,37 +1,41 @@
-import { Controller, Get, Param, Body, Post, Put, Delete, ParseIntPipe } from '@nestjs/common';
-import {games} from './../entities/game.entity'
-import {GamesService} from './../service/games.service';
-
+import { Controller, Get, Post, Body, Param, Put, Delete, HttpCode, HttpStatus, NotFoundException } from '@nestjs/common';
+import { GamesService } from './../service/games.service';
 
 @Controller('api/games')
 export class GamesController {
-    constructor(private readonly gamesService: GamesService) {}
+  constructor(private readonly gamesService: GamesService) {}
 
-    @Get('all')
-    async getAll(): Promise<games[]> {
-        return await this.gamesService.findAll();
+  @Get()
+  async findAll() {
+    return await this.gamesService.findAll();
+  }
+
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  async findOne(@Param('id') id: number) {
+    const game = await this.gamesService.findOne(id);
+    if (!game) {
+      throw new NotFoundException('Game not found');
     }
+    return game;
+  }
 
-    @Get(':_id')
-    async getOne(@Param('id', ParseIntPipe) id: number): Promise<games> {
-        return await this.gamesService.findOne(id);
-    }
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  async create(@Body() createGame: any) {
+    return await this.gamesService.create(createGame);
+  }
 
-    @Post()
-    async create(@Body() gameData: Partial<games>): Promise<games> {
-        return await this.gamesService.create(gameData);
-    }
+  @Put(':id')
+  @HttpCode(HttpStatus.OK)
+  async update(@Param('id') id: number, @Body() updateGame: any) {
+    await this.gamesService.update(id, updateGame);
+    return await this.gamesService.findOne(id);
+  }
 
-    @Put(':_id')
-    async update(
-        @Param('_id', ParseIntPipe) id: number,
-        @Body() updateData: Partial<games>): Promise<games> {
-        return await this.gamesService.update(id, updateData);
-    }
-
-    @Delete(':_id')
-    async delete(@Param('_id', ParseIntPipe) id: number): Promise<boolean> {
-    return await this.gamesService.remove(id)
-    }
-
+  @Delete(':id')
+  async remove(@Param('id') id: number) {
+    await this.gamesService.remove(id);
+    return { deleted: true };
+  }
 }
