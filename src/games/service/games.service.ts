@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import {Games} from './../entities/game.entity'
+import {games} from './../entities/game.entity'
 
 @Injectable()
 export class GamesService {
     constructor(
-        @InjectRepository(Games) private gamesRepo: Repository<Games>
+        @InjectRepository(games) private gamesRepo: Repository<games>
     ) {}
 
     findAll() {
@@ -17,12 +17,12 @@ export class GamesService {
         return this.gamesRepo.findOne({ where: { id } });
     }
 
-    async create(gameData: Partial<Games>) {
+    async create(gameData: Partial<games>) {
         const newGame = this.gamesRepo.create(gameData);
         return this.gamesRepo.save(newGame);
     }
 
-    async update(id: number, updateData: Partial<Games>) {
+    async update(id: number, updateData: Partial<games>) {
         await this.gamesRepo.update(id, updateData);
         return this.gamesRepo.findOne({ where: { id } });
     }

@@ -1,5 +1,5 @@
 import { Controller, Get, Param, Body, Post, Put, Delete, ParseIntPipe } from '@nestjs/common';
-import {Games} from './../entities/game.entity'
+import {games} from './../entities/game.entity'
 import {GamesService} from './../service/games.service';
 
 
@@ -7,31 +7,31 @@ import {GamesService} from './../service/games.service';
 export class GamesController {
     constructor(private readonly gamesService: GamesService) {}
 
-    @Get()
-    async getAll(): Promise<Games[]> {
-        return this.gamesService.findAll();
+    @Get('all')
+    async getAll(): Promise<games[]> {
+        return await this.gamesService.findAll();
     }
 
-    @Get(':id')
-    async getOne(@Param('id', ParseIntPipe) id: number): Promise<Games> {
-        return this.gamesService.findOne(id);
+    @Get(':_id')
+    async getOne(@Param('id', ParseIntPipe) id: number): Promise<games> {
+        return await this.gamesService.findOne(id);
     }
 
     @Post()
-    async create(@Body() gameData: Partial<Games>): Promise<Games> {
-        return this.gamesService.create(gameData);
+    async create(@Body() gameData: Partial<games>): Promise<games> {
+        return await this.gamesService.create(gameData);
     }
 
-    @Put(':id')
+    @Put(':_id')
     async update(
-        @Param('id', ParseIntPipe) id: number,
-        @Body() updateData: Partial<Games>): Promise<Games> {
-        return this.gamesService.update(id, updateData);
+        @Param('_id', ParseIntPipe) id: number,
+        @Body() updateData: Partial<games>): Promise<games> {
+        return await this.gamesService.update(id, updateData);
     }
 
-    @Delete(':id')
-    async delete(@Param('id', ParseIntPipe) id: number): Promise<boolean> {
-    return this.gamesService.remove(id)
+    @Delete(':_id')
+    async delete(@Param('_id', ParseIntPipe) id: number): Promise<boolean> {
+    return await this.gamesService.remove(id)
     }
 
 }
