@@ -3,7 +3,7 @@ import { GamesModule } from './games/games.module';
 import { PlayersModule } from './players/players.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { ResultsModule } from './results/results.module';
+
 
 @Module({
   imports: [ConfigModule.forRoot(),
@@ -20,9 +20,8 @@ import { ResultsModule } from './results/results.module';
     }),
 
     GamesModule, 
-    PlayersModule, ResultsModule
+    PlayersModule
   ],
-  controllers: [GamesModule,PlayersModule,ResultsModule],
   providers: [],
 })
 export class AppModule {}

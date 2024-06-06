@@ -3,7 +3,7 @@ import { GamesService } from './../service/games.service';
 
 @Controller('api/games')
 export class GamesController {
-  constructor(private readonly gamesService: GamesService) {}
+  constructor( private readonly gamesService: GamesService) {}
 
   @Get()
   async findAll() {
